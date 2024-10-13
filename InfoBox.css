@@ -1,0 +1,9 @@
+.CardBox{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.CardBox .MuiCard-root {
+    width: 600px;            
+}
