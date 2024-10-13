@@ -1,6 +1,7 @@
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export default function SearchBox({updateInfo}){
     let [city,SetCity] = useState("");
@@ -46,14 +47,48 @@ export default function SearchBox({updateInfo}){
         }
     }
 
+    const theme = createTheme({
+        components: {
+            MuiTextField: {
+                styleOverrides: {
+                    root: {
+                        '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                                borderColor: 'white', // White outline
+                            },
+                            '&:hover fieldset': {
+                                borderColor: 'white', // White outline on hover
+                            },
+                            '&.Mui-focused fieldset': {
+                                borderColor: 'white', // White outline on focus
+                            },
+                        },
+                    },
+                },
+            },
+            MuiInputLabel: {
+                styleOverrides: {
+                    root: {
+                        color: 'white', // White placeholder color
+                        '&.Mui-focused': {
+                            color: 'white', // White when focused
+                        },
+                    },
+                },
+            },
+        },
+    });
+
     return (
-        <div>
-            <form onSubmit={handelSubmit}>
-                <TextField id="city" label="City Name" variant="outlined" value={city} required onChange={handleChange}/>
-                <br /><br />
-                <Button variant="contained" type='Submit'>Search</Button>
-                {error && <p>API doesn't support this place</p>}
-            </form>
-        </div>
+        <ThemeProvider theme={theme}>
+            <div>
+                <form onSubmit={handelSubmit}>
+                    <TextField id="city" label="City Name" variant="outlined" value={city} required onChange={handleChange} InputProps={{style: { color: 'white' },}}/>
+                    <br /><br />
+                    <Button variant="contained" type='Submit'>Search</Button>
+                    {error && <p>API doesn't support this place</p>}
+                </form>
+            </div>
+        </ThemeProvider>
     )
 }
